@@ -1,9 +1,8 @@
 package fr.m2i.tp.entity;
 
-import java.sql.Time;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,12 +25,18 @@ public class Session {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Date date;
-	private Time startTime;
+	private LocalDate date;
+	private LocalTime startTime;
 	private Integer nbRemainingPlaces;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "SpectacleId")
 	private Spectacle spectacle;
+
+	public Session(LocalDate date, LocalTime startTime, Integer nbRemainingPlaces) {
+		this.date = date;
+		this.startTime = startTime;
+		this.nbRemainingPlaces = nbRemainingPlaces;
+	}
 
 }

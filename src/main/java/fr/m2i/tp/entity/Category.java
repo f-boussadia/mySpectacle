@@ -11,12 +11,10 @@ import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 public class Category {
 
@@ -27,4 +25,14 @@ public class Category {
 
 	@OneToMany(mappedBy = "category")
 	private List<Spectacle> spectacles;
+
+	public Category(String title) {
+		this.title = title;
+	}
+
+	@Override
+	public String toString() {
+		return "Category [id=" + id + ", title=" + title + "]";
+	}
+
 }
