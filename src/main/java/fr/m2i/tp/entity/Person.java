@@ -1,17 +1,22 @@
 package fr.m2i.tp.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,13 +39,17 @@ public class Person {
 	private String lastName;
 	private String email;
 	private String phoneNumber;
-	private Date birthday;
+	private LocalDate birthday;
 
 	@Embedded
 	private Adress adress;
 
-	public Person(Long id, String firstName, String lastName, String email, String phoneNumber, Date birthday,
-			Adress adress) {
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "Resa_Personne", joinColumns = { @JoinColumn(name = "personne_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "reservation_id") })
+	private List<Reservation> reservationss;
+
+	public Person(Long id, String firstName, String lastName, String email, String phoneNumber, LocalDate birthday) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -48,7 +57,7 @@ public class Person {
 		this.email = email;
 		this.phoneNumber = phoneNumber;
 		this.birthday = birthday;
-		this.adress = adress;
+
 	}
 
 }
